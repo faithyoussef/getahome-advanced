@@ -1,0 +1,107 @@
+
+
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+
+import '../utils/property.dart';
+import 'DetailPage.dart';
+
+class RecommendedHouse extends StatelessWidget {
+  final recommendedList = Property.generateRecommended();
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: EdgeInsets.all(15),
+      height: 340,
+      child: ListView.separated(
+          scrollDirection: Axis.horizontal,
+          itemBuilder: (context, index) => GestureDetector(
+            onTap: () {
+              Navigator.of(context)
+                  .push(MaterialPageRoute(builder: (context) {
+                return DetailPage(Property: getProperty('', ''));
+                 },
+               ),
+              );
+            },
+            child: Container(
+              width: 230,
+              padding: EdgeInsets.all(10),
+              decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(8)),
+              child: Stack(
+                children: [
+                  Container(
+                    decoration: BoxDecoration(
+                        image: DecorationImage(
+                            image: AssetImage(
+                             "images/house_04.jpg"
+                            ),
+                            fit: BoxFit.cover)),
+                  ),
+                  Container(
+                    decoration: BoxDecoration(
+                        image: DecorationImage(
+                            image: AssetImage(
+                                "images/house_05.jpg"
+                            ),
+                            fit: BoxFit.cover)),
+                  ),
+                  Positioned(
+                    right: 15,
+                    top: 15,
+                    child:  FilledButton.tonal(
+                      onPressed: () {},
+                      child: const Text('Enabled'),
+                    ),
+                  ),
+                  Positioned(
+                      bottom: 0,
+                      left: 0,
+                      right: 0,
+                      child: Container(
+                        color: Colors.white54,
+                        padding: EdgeInsets.all(10),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(recommendedList[index].name,
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .headline1!
+                                        .copyWith(
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.bold)),
+                                SizedBox(
+                                  height: 5,
+                                ),
+                                Text(
+                                  "",
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .bodyText1!
+                                      .copyWith(
+                                      fontSize: 12,
+                                      fontWeight: FontWeight.bold),
+                                )
+                              ],
+                            ),
+                          ],
+                        ),
+                      ))
+                ],
+              ),
+            ),
+          ),
+          separatorBuilder: (_, index) => SizedBox(width: 20),
+          itemCount: recommendedList.length),
+    );
+  }
+
+ List<Property> getProperty(String s, String t) {
+    return getPropertyList(); }
+}
